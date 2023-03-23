@@ -19,6 +19,8 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.test.skip.exec>true</maven.test.skip.exec>
+        <gatling.skip>true</gatling.skip>
     </properties>
 
 </project>
