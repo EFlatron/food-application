@@ -1,7 +1,9 @@
 package com.food.load;
 
+import com.food.load.actions.AddFood;
 import com.food.load.actions.GetAllFoods;
 import com.food.load.actions.GetFoodById;
+import com.food.load.actions.RemoveFood;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
@@ -22,6 +24,11 @@ public class FoodSimulation extends Simulation {
         HttpProtocolBuilder httpProtocol = http
             .baseUrl(ConfigHelper.baseUrl);
 
+        ScenarioBuilder addFood_scn = scenario("Add Food")
+            .during(ConfigHelper.sustainedLoadSeconds).on(
+                exec(
+                    AddFood.chain
+                ));
         ScenarioBuilder getAllFoods_scn = scenario("Get All Foods")
             .during(ConfigHelper.sustainedLoadSeconds).on(
                 exec(
@@ -32,12 +39,25 @@ public class FoodSimulation extends Simulation {
                 exec(
                     GetFoodById.chain
                 ));
+        ScenarioBuilder removeFood = scenario("Remove Food")
+            .during(ConfigHelper.sustainedLoadSeconds).on(
+                exec(
+                    RemoveFood.chain
+                ));
         setUp(
+            addFood_scn.injectOpen(
+                rampUsers(ConfigHelper.maxUsers).during(ConfigHelper.rampSeconds),
+                nothingFor(ConfigHelper.sustainedLoadSeconds)
+            ),
             getAllFoods_scn.injectOpen(
                 rampUsers(ConfigHelper.maxUsers).during(ConfigHelper.rampSeconds),
                 nothingFor(ConfigHelper.sustainedLoadSeconds)
             ),
             getFoodById_scn.injectOpen(
+                rampUsers(ConfigHelper.maxUsers).during(ConfigHelper.rampSeconds),
+                nothingFor(ConfigHelper.sustainedLoadSeconds)
+            ),
+            removeFood.injectOpen(
                 rampUsers(ConfigHelper.maxUsers).during(ConfigHelper.rampSeconds),
                 nothingFor(ConfigHelper.sustainedLoadSeconds)
             )

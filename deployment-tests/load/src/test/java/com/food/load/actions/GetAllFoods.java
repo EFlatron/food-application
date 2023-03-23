@@ -11,6 +11,6 @@ public class GetAllFoods {
     public static final ChainBuilder chain = exec(http("Get All Foods")
         .get("/foods")
         .check(status().is(200)))
-        .pause(2);
+        .pause(10);
 
 }

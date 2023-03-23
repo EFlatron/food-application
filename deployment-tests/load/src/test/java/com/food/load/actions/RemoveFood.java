@@ -7,11 +7,11 @@ import static io.gatling.javaapi.core.CoreDsl.exec;
 import static io.gatling.javaapi.http.HttpDsl.http;
 import static io.gatling.javaapi.http.HttpDsl.status;
 
-public class GetFoodById {
+public class RemoveFood {
 
-    public static final ChainBuilder chain = exec(http("Get Food by ID")
-        .get("/foods/" + ConfigHelper.PRODUCT_ID)
+    public static final ChainBuilder chain = exec(http("Remove Food")
+        .delete("/foods/" + ConfigHelper.PRODUCT_ID)
         .check(status().is(200)))
-        .pause(10);
+        .pause(2);
 
 }
