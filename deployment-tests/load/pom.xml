@@ -34,7 +34,6 @@
             <plugin>
                 <groupId>io.gatling</groupId>
                 <artifactId>gatling-maven-plugin</artifactId>
-                <version>4.0.1</version>
             </plugin>
         </plugins>
     </build>
